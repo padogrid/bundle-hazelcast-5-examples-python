@@ -8,7 +8,7 @@ This bundle provides Hazelcast Python client examples running on JupyterLab in P
 ## Installing Bundle
 
 ```bash
-install_bundle -download -workspace bundle-hazelcast-examples-python
+install_bundle -download -workspace bundle-hazelcast-5-examples-python
 ```
 
 ## Use Case
