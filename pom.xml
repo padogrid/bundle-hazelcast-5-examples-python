@@ -5,13 +5,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>padogrid.addon</groupId>
-	<!-- @template: Enter your bundle name here -->
-	<artifactId>bundle-hazelcast-template</artifactId>
+	<artifactId>bundle-hazelcast-example-python</artifactId>
 	<packaging>pom</packaging>
 	<name>${project.artifactId}</name>
 	<version>1.0.0</version>
-	<!-- @template: Enter your bundle description -->
-	<description>Bundle template</description>
+	<description>This bundle provides a Python client example running on PythonLab in PadoGrid.</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

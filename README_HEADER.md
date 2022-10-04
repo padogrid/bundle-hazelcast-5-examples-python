@@ -1,1 +1,1 @@
-This bundle serves as a template for creating a new Hazelcast bundle. Run `show_bundle bundle-hazelcast-template` to see instructions.
+This bundle provides Hazelcast Python client examples running on PythonLab in PadoGrid. It demonstrates how PadoGrid workspaces are seamlessly integrated with JupyterLab workspaces.

@@ -1,103 +1,138 @@
 ![PadoGrid](https://github.com/padogrid/padogrid/raw/develop/images/padogrid-3d-16x16.png) [*PadoGrid*](https://github.com/padogrid) | [*Catalogs*](https://github.com/padogrid/catalog-bundles/blob/master/all-catalog.md) | [*Manual*](https://github.com/padogrid/padogrid/wiki) | [*FAQ*](https://github.com/padogrid/padogrid/wiki/faq) | [*Releases*](https://github.com/padogrid/padogrid/releases) | [*Templates*](https://github.com/padogrid/padogrid/wiki/Using-Bundle-Templates) | [*Pods*](https://github.com/padogrid/padogrid/wiki/Understanding-Padogrid-Pods) | [*Kubernetes*](https://github.com/padogrid/padogrid/wiki/Kubernetes) | [*Docker*](https://github.com/padogrid/padogrid/wiki/Docker) | [*Apps*](https://github.com/padogrid/padogrid/wiki/Apps) | [*Quick Start*](https://github.com/padogrid/padogrid/wiki/Quick-Start)
 
 ---
-# Hazelcast Bundle Template
+# Hazelcast JupyterLab Python Examples
 
-This bundle serves as a template for creating a new Hazelcast onlne bundle.
+This bundle provides Hazelcast Python client examples running on PythonLab in PadoGrid. It demonstrates how PadoGrid workspaces are seamlessly integrated with JupyterLab workspaces.
 
 ## Installing Bundle
 
 ```bash
-install_bundle -download bundle-hazelcast-template
+install_bundle -download -workspace bundle-hazelcast-examples-python
 ```
 
 ## Use Case
 
-If you are creating a new online bundle, then you can use this template to create your bundle repo. It includes all the required files with marked annotations for you to quickly start developing a new online bundle. Please follow the steps shown below.
+This bundle provides step-by-step instructions for creating a JupyterLab environment in PadoGrid and executing Hazelcast Python clients in Jupyter Notebook that writes and reads to/from a local Hazelcast cluster.
 
-## 1. Create Repo
+![Jupyter Notebooks](images/examples-python.drawio.png)
 
-Select **Use this template** button in the upper right coner to create your repo. Make sure to follow the bundle naming conventions described in the following link.
+## Installing JupyterLab
 
-## 2. Checkout Repo in Workspace
+Install JupyterLab on your machine as described in the following section in the PadoGrid manual.
 
-```bash
-# PadoGrid 0.9.7+
-install_bundle -checkout <bundle-repo-name>
+[JupyterLab](https://github.com/padogrid/padogrid/wiki/JupyterLab)
 
-# PadoGrid 0.9.6 and older
-install_bundle -download -workspace <bundle-repo-name>
+## Startup Sequence
 
-# Switch into the checked out bundle workspace
-switch_workspace <bundle-repo-name>
-```
-
-## 3. Update Files
-
-Update the files came with the template repo.
-
-- `pom.xml`
-- `assembly-descriptor.xml`
-- `.gitignore`
-- `README_HEADER.md` (Optional)
-- `README.md` (This file)
-- `README.TEMPLATE` (Remove it when done. See instructions below.)
-- `required_products.txt`
-
-### 3.1. pom.xml
-
-The `pom.xml` file contains instructions annocated with **@template**. Search **@template** and add your bundle specifics there.
-
-### 3.2 assembly-descriptor.xml
-
-This file creates a tarball that will be deployed when the user executes the `install_bundle -download` command. Search **@template** and add your bundle specifics there.
-
-### 3.3 .gitignore
-
-The `.gitignore` file lists workspace specific files to be excluded from getting checked in. Edit `.gitignore` and add new exludes or remove existing excludes.
+1. Start JupyterLab
 
 ```bash
-vi .gitignore
+open_jupyter
 ```
 
-Make sure to comment out your workspace directories (components) so that they can be included by `git`.
+2. Switch workspace in each terminal
 
-```console
-...
-# PadoGrid workspace directories
-apps
-clusters
-docker
-k8s
-pods
-...
-```
-
-## 3.4. README_HEADER.md
-
-Enter a short description of your bundle in the `README_HEADER.md` file. This file content is displayed when you execute the `show_bundle -header` command. **Note that this file is optional.** If it does not exist, then the first paragraph of the `README.md` file is used instead.
-
-## 3.5. READEME.md (this file)
-
-Replace `README.md` with the README_TEMPLATE.md file. Make sure to remove `README_TEMPLATE.md` after you have replaced `READEME.md` with it.
+Due to JupyterLab limitations, the terminals shown in the browser are not in the PadoGrid workspace context. Execute the following in each terminal to switch to the PadoGrid workspace. Make sure to replace `<your_rwe>` with your RWE name.
 
 ```bash
-cp README_TEMPLATE.md README.md
-git rm README_TEMPLATE.md
+switch_rwe <your_rwe>/bundle-hazelcast-example-python
 ```
 
-Update the `READEME.md` file by following the instructions in that file.
+3. Start cluster
 
-## 3.6. required_products.txt
+From one of the terminals in the browser, create and start a Hazelcast cluster.
 
-The `required_products.txt` file must include a list of required products and their versions. Its format is described in the following link.
+```bash
+make_cluster -product hazelcast
+start_cluster -all
+```
 
-[Relaxed Bundle Naming Conventions](https://github.com/padogrid/padogrid/wiki/User-Bundle-Repos#relaxed-conventions)
+4. Install Hazelcast Python client package
 
-## 4. Develop and Test Bundle
+```bash
+pip install hazelcast-python-client
+```
 
-You can freely make changes and test the bundle in the workspace. When you are ready to check in, you simply commit the changes using the `git commit` command. For new files, you will need to select only the ones that you want to check in using the `git status -u` and `git diff` commands. For those files that you do not want to check in, you can list them in the `.gitignore` file so that they do not get checked in accidentally.
+5. Open and run `apps/python_examples/map1.ipynb`. The following shows `map1.ipynb` contents.
 
+```python
+import hazelcast
+
+# Start the Hazelcast Client and connect to an already running Hazelcast Cluster on 127.0.0.1
+client = hazelcast.HazelcastClient()
+
+# Get a map from Cluster.
+map1 = client.get_map("map1").blocking()
+
+# PUt values
+map1.put("key1", "value1")
+map1.put("key2", "value2")
+
+# Get values
+value1=map1.get("key1")
+value2=map1.get("key2")
+
+# Print map values
+print('value1=' + value1)
+print('value2=' + value2)
+
+# Concurrent Map methods, optimistic updating
+map1.put_if_absent("key3", "value3")
+map1.replace_if_same("key1", "value1", "new_value1")
+
+# Get values
+value1=map1.get("key1")
+value2=map1.get("key2")
+value3=map1.get("key3")
+
+# Print map values
+print()
+print('value1=' + value1)
+print('value2=' + value2)
+print('value3=' + value3)
+
+# Shutdown this Hazelcast Client
+client.shutdown()
+```
+
+6. Open and run `nw_portable.ipynb`. This notebook puts and gets Customer and `Order` objects into/from the `nw/customers` and `nw/orders` maps, respectively. After you ran the notebook, you can check the entries by running the `perf_test` app from the terminal as follows.
+
+```bash
+create_app
+cd_app perf_test/bin_sh
+./read_cache nw/customers
+./read_cache nw/orders
+```
+
+You can also ingest mock data into the `nw/customers` and `nw_orders` maps using `perf_test` as follows.
+
+```bash
+cd_app perf_test/bin_sh
+# First, build perf_test to download the necessary jar files
+./buid_app
+# Ingest Customer and Order objects into nw/customer and nw/orders, respectively
+./test_group -run -prop ../etc/group-factory.properties
+```
+
+Upon completion, run `read_cache` as described above and use `customerId` and `orderId` in your Python code to retrieve `Customer` and `Order` objects.
+
+7. Open other example Notebook files and run them. They are extracted from [1].
+
+8. Open Management Center in the browser and check the **map1** entries.
+
+URL: http://localhost:8080/hazelcast-mancenter
+
+## Teardown
+
+```bash
+stop_cluster -all
+stop_jupyter
+```
+
+## References
+
+1. Hazelcast Python Client Examples, https://github.com/hazelcast/hazelcast-python-client/tree/master/examples/org-website
 
 ---
 
