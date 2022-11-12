@@ -9,6 +9,15 @@
 	<includeBaseDirectory>false</includeBaseDirectory>
 	<baseDirectory>${project.name}</baseDirectory>
 
+	<!-- Include README.md in the 'bundles' directory so that it can be referenced 
+	     after the bundle is installed. -->
+	<files>
+		<file>
+			<source>README.md</source>
+			<outputDirectory>bundles/</outputDirectory>
+			<destName>${project.name}-README.md</destName>
+		</file>
+	</files>
 	<fileSets>
 		<fileSet>
 			<directory>apps</directory>
@@ -17,7 +26,7 @@
 				<include>**</include>
 			</includes>
 		</fileSet>
-		
+
 		<!-- Executable permissions -->
 		<fileSet>
 			<directory>apps/python_examples/bin_sh/</directory>
