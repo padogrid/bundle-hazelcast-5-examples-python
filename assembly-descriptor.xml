@@ -14,13 +14,13 @@
 	<files>
 		<file>
 			<source>README.md</source>
-			<outputDirectory>bundles/${project.name}</outputDirectory>
+         <outputDirectory>bundles/installed/${project.name}</outputDirectory>
 		</file>
 	</files>
 	<fileSets>
 		<fileSet>
 			<directory>images</directory>
-         <outputDirectory>bundles/${project.name}/images</outputDirectory>
+         <outputDirectory>bundles/installed/${project.name}/images</outputDirectory>
 			<includes>
 				<include>**</include>
 			</includes>
