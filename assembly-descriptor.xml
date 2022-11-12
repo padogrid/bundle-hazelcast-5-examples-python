@@ -14,11 +14,17 @@
 	<files>
 		<file>
 			<source>README.md</source>
-			<outputDirectory>bundles/</outputDirectory>
-			<destName>${project.name}-README.md</destName>
+			<outputDirectory>bundles/${project.name}</outputDirectory>
 		</file>
 	</files>
 	<fileSets>
+		<fileSet>
+			<directory>images</directory>
+         <outputDirectory>bundles/${project.name}/images</outputDirectory>
+			<includes>
+				<include>**</include>
+			</includes>
+		</fileSet>
 		<fileSet>
 			<directory>apps</directory>
 			<outputDirectory>apps</outputDirectory>
