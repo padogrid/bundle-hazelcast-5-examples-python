@@ -18,6 +18,7 @@
 		</file>
 	</files>
 	<fileSets>
+      <!-- Include bundle images so that README.md can render them. -->
 		<fileSet>
 			<directory>images</directory>
          <outputDirectory>bundles/installed/${project.name}/images</outputDirectory>
@@ -25,6 +26,8 @@
 				<include>**</include>
 			</includes>
 		</fileSet>
+
+      <!-- Include bundle components -->
 		<fileSet>
 			<directory>apps</directory>
 			<outputDirectory>apps</outputDirectory>
