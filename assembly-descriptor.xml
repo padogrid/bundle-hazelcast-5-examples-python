@@ -9,22 +9,18 @@
 	<includeBaseDirectory>false</includeBaseDirectory>
 	<baseDirectory>${project.name}</baseDirectory>
 
-	<!-- Include README.md in the 'bundles' directory so that it can be referenced 
-	     after the bundle is installed. -->
-	<files>
-		<file>
-			<source>README.md</source>
-         <outputDirectory>bundles/installed/${project.name}</outputDirectory>
-		</file>
-	</files>
-	<fileSets>
-      <!-- Include bundle images so that README.md can render them. -->
+   <fileSets>
+      <!-- Include documents and their image artifacts in the 'bundles/doc' directory
+           so that they can be referenced after the bundle is installed. -->
 		<fileSet>
-			<directory>images</directory>
-         <outputDirectory>bundles/installed/${project.name}/images</outputDirectory>
+         <outputDirectory>bundles/doc/${project.name}</outputDirectory>
 			<includes>
-				<include>**</include>
+				<include>*.md</include>
+            <include>images/</include>
 			</includes>
+         <excludes>
+				<exclude>README_HEADER.md</exclude>
+         </excludes>
 		</fileSet>
 
       <!-- Include bundle components -->
@@ -36,7 +32,7 @@
 			</includes>
 		</fileSet>
 
-		<!-- Executable permissions -->
+		<!-- Set executable permissions -->
 		<fileSet>
 			<directory>apps/python_examples/bin_sh/</directory>
 			<outputDirectory>apps/python_examples/bin_sh/</outputDirectory>
