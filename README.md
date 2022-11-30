@@ -44,7 +44,8 @@ switch_rwe <your_rwe>/bundle-hazelcast-examples-python
 From one of the terminals in the browser, create and start a Hazelcast cluster.
 
 ```bash
-make_cluster -product hazelcast
+make_cluster -product hazelcast -cluster myhz
+switch_cluster myhz
 start_cluster -all
 ```
 
@@ -99,7 +100,7 @@ client.shutdown()
 6. Open and run `nw_portable.ipynb`. This notebook puts and gets Customer and `Order` objects into/from the `nw/customers` and `nw/orders` maps, respectively. After you ran the notebook, you can check the entries by running the `perf_test` app from the terminal as follows.
 
 ```bash
-create_app
+create_app -product hazelcast
 cd_app perf_test/bin_sh
 ./read_cache nw/customers
 ./read_cache nw/orders
