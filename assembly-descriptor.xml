@@ -10,10 +10,10 @@
 	<baseDirectory>${project.name}</baseDirectory>
 
 	<fileSets>
-		<!-- Include documents and their image artifacts in the 'bundles/workspace' 
+		<!-- Include documents and their image artifacts in the 'bundles/doc' 
 			directory so that they can be referenced after the bundle is installed. -->
 		<fileSet>
-			<outputDirectory>bundles/workspace/${project.name}</outputDirectory>
+			<outputDirectory>bundles/doc/${project.name}</outputDirectory>
 			<includes>
 				<include>*.md</include>
 				<include>images/</include>
