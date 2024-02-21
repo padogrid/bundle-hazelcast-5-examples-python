@@ -48,7 +48,7 @@ switch_rwe <your_rwe>/bundle-hazelcast-examples-python
 From one of the terminals in the browser, create and start a Hazelcast cluster.
 
 ```bash
-make_cluster -product hazelcast -cluster myhz
+create_cluster -product hazelcast -cluster myhz
 switch_cluster myhz
 start_cluster -all
 ```
