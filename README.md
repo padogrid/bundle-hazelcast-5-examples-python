@@ -21,6 +21,12 @@ This bundle provides step-by-step instructions for creating a JupyterLab environ
 
 ![Jupyter Notebooks](images/examples-python.drawio.png)
 
+## Required Software
+
+- Hazelcast 5.x
+- Python 3.x
+- JupyterLab
+
 ## Installing JupyterLab
 
 Install JupyterLab on your machine as described in the following section in the PadoGrid manual.
@@ -34,6 +40,9 @@ Install JupyterLab on your machine as described in the following section in the 
 ```bash
 # Start Jupyter Lab in backgroun
 start_jupyter -dashboard &
+
+# Check status
+show_jupyter
 
 # Open Jupyter Lab in the browser
 open_jupyter
